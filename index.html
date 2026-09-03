@@ -1,326 +1,555 @@
-<!DOCTYPE HTML>
-<!--
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<!-- 	This is the "Head" of the HTML document.
-		It contains information that isn't displayed on the actual page, but is useful
-		for the web browser when loading the page	
-	-->
-	<head>
-		<!-- This is the title of the page. It is the text that appears inside this pages tab in your web browser -->
-		<title>AstroSites</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!-- 	This links to this page's CSS, which is contained in the folder assets/css and the file main.css.
-			 If you want to edit the styling of this page, you should edit the file assets/css/main.css
-			 If you have a new CSS file you'd like to add with custom styling, you should link to it here using:
-			 <link rel="stylesheet" href="assets/css/my-new-css-file.css"/> 
-		-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!-- 	In the case that the user's browser does not support JavaScript (unlikely, but possible), the page
-			will load a separate set of CSS stylings from the file assets/css/noscript.css
-			Any HTML contained inside <noscript></noscript> tags will be loaded in the event that JavaScript is not
-			available. 
-		-->
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<!-- The body is the location where your site's content will go -->
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Xiangyu Zhang (张翔宇) — KIPAC Postdoctoral Fellow at Stanford University, working on the interstellar medium, 3D dust extinction, machine learning, and PAHs." />
+	<meta name="author" content="Xiangyu Zhang" />
+	<meta name="theme-color" content="#04060c" />
+	<title>Xiangyu Zhang 张翔宇 — KIPAC / Stanford</title>
+	<link rel="icon" href="images/head.jpg" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<style>
+			.reveal { opacity: 1; transform: none; }
+			body.is-preload * { animation: none !important; }
+		</style>
+	</noscript>
+</head>
 
-			<!-- This "div" wraps around all of our content and just changes how things are layed out -->
-			<div id="wrapper">
+<body class="is-preload">
+	<!-- 星空背景（canvas）与背景光晕 -->
+	<canvas id="stardust" aria-hidden="true"></canvas>
+	<div class="ambient ambient--a" aria-hidden="true"></div>
+	<div class="ambient ambient--b" aria-hidden="true"></div>
 
-					<!-- This is where the content that appears on page load exists -->
-					<header id="header">
-						<!-- This is the main content of the front page -->
-						<div class="content">
-							<div class="inner">
-								<!-- Here is a heading where you can put your name -->
-								<h1>
-									Xiangyu Zhang | 张翔宇
-								</h1>
-								<!-- 	Here is an image where you can put a picture of you. 
-									You can change the width and height attributes below to change how large
-									your image is.
+	<a class="skip-link" href="#main">Skip to content</a>
 
-									Try adding "border-radius: 50%;" to the style attribute.
-								-->
-								<img src="images/head.jpg" style="width:200px; height:257px; object-fit: cover;">
-								<!-- 	Here is a paragraph where you can put your position and institution, or
-									a short line about yourself.
-								-->
-								<p>
-									Graduate student  @
-								<p>
-									Max Planck Institute for Astronomy (MPIA)
-								</p>
-								<!-- Here is a paragraph where you can put a link to your CV -->
-								<p>
-									<!-- Note you will want to change where this points to! -->
-									<a href="CV/CV_zxy_2026.pdf" target="_blank">CV & My publications</a>
-								</p>
-							</div>
-						</div>
-						<!-- This is the navigation menu -->
-						<nav>
-							<!-- This element makes an "Unordered List" -->
-							<ul>
-								<!-- This is a "List Item" -->
-								<li>
-									<!-- 	Note that this links to #about, which will move the page to wherever
-										the element with the id "about" exists.
-									-->
-									<a href="#about">About Me</a>
-								</li>
-								<li>
-									<a href="#research">My Work</a>
-								</li>
-								<li>
-									<a href="#obs">Observations</a>
-								</li>
-								<li>
-									<a href="#pre">Talks</a>
-								</li>
-								<li>
-									<a href="#contact">Contact</a>
-								</li>
-								<!-- 	You can add another button to your navigation menu by adding
-									another List Item with a link inside of it.
-								-->
-								<!-- <li>
-									<a href="images/head.jpg">My CV</a>
-								</li> -->
-							</ul>
-						</nav>
-					</header>
+	<!-- ============ 顶部导航 ============ -->
+	<header class="site-header" id="siteHeader">
+		<div class="site-header__inner">
+			<a class="brand" href="#top">
+				<span class="brand__mark" aria-hidden="true"></span>
+				<span class="brand__text">Xiangyu&nbsp;Zhang</span>
+			</a>
 
-					<!-- These are the "cards" that appear when you click the buttons on the main page -->
-					<div id="main">
-						<!-- 	Here is the "About Me" card. Note it has the id "about", which the previous 
-							button links to.
-						-->
-						<article id="about">
-							<h2 class="major">About Me</h2>
-							<!-- Here is an image that you can customize for this page -->
-							<!--<span class="image main">
-								<img src="images/head_long.jpg" alt=""/>
-							</span>-->
-							<!-- Here are three paragraphs where you can fill out information about yourself -->
-							<p>
-							I am a final-year graduate student at MPIA. I have a physics background and am generally working on interstellar medium, dust extinction, and machine learning<br><br>
+			<nav class="site-nav" id="siteNav" aria-label="Primary">
+				<a href="#about">About</a>
+				<a href="#research">Research</a>
+				<a href="#publications">Publications</a>
+				<a href="#talks">Talks</a>
+				<a href="#observations">Observations</a>
+				<a href="#contact">Contact</a>
+			</nav>
 
-								<!-- Items contained in <b> tags are bolded! -->
-								<b>Education:</b><br>
-								2021-present, Graduate student @ MPIA<br>
-								2021, Bachelor's degree of Natural Science @ Dep. of Physics, THU
-							</p>
-							<p>
-								<b>Research Interests:</b><br>
-								Topics: Chemical evolution of the interstellar medium | 
-								3D dust maps of the MW | PAHs
-							<br>
-								Methods: Machine learning with large spectroscopic and photometric surveys
-								 
-							<br>
-								Instruments: Gaia | JWST | SPHEREx | DESI | Rubin/LSST 
-							</p>
-							<p>
-								<b>Publications:</b><br>
-								Please refer to my <a href="https://ui.adsabs.harvard.edu/search/p_=0&q=orcid%3A0000-0003-3112-3305" 									style="color: red;">ADS library</a>
-							</p>
+			<button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Toggle navigation">
+				<span></span><span></span><span></span>
+			</button>
+		</div>
+	</header>
 
-							<hr>  
-
-							I come from Baotou, "the city of deers". Besides astronomy, I like spending all day at history museums 								learning random historical fun facts, such as: </p>
-
-							<span class="major">
-								<img src="images/hunyi.jpg" style="width:360px;display: block; margin: auto;"/>
-								<figcaption>This is how astronomers in 16th century measured stellar coordinates. 
-								</b> (Shot by me in the Ancient Observatory, Beijing, 2018)</figcaption>
-							</span>
-
-							</p>
-
-							<style>  
-								.like-button {  
-								    margin-bottom: 10px;  
-								}  
-							</style>  
-							<button class="like-button" onclick="likePost()">Like</button>  
- 							<p id="likeCount">Thanks for your like(s)!</p> 
-
-						</article>
-
-
-						<article id="obs">
-							<b>Approved proposals as PI:</b>
-
-							<p>
-							2. The Green Bank Telescope (GBT), K-band (18-26.5 GHz), <span style="color:red;">30.0 h</span>.<br>
-							Detecting HC3N in M31: Verifying Extragalactic In-Situ PAH Formation.<br>
-							Group A, Linear Ranked Score: 2.41 / 10.
-							</p>
-
-							<p>
-							1. The Green Bank Telescope (GBT), K-band (18-26.5 GHz), <span style="color:red;">5.0 h</span>.<br>
-							Tracers of PAH formation at the edges of molecular clouds: source verification.<br>
-							Group A, Linear Ranked Score: 0.65 / 10.
-							</p>
-						</article>
-
-
-						<!-- Here is the "Research" card. -->
-						<article id="research">
-							<h2 class="major">Research</h2>
-						
-							<p>
-							<b>Parameters of 220 million stars from Gaia BP/RP spectra </b>
-							<br>
-							<span class="major">
-								<img src="images/dustmap_1.png" style="width:570px;height:291px;object-fit: cover;"/>
-							</span>
-
-
-
-							Gaia DR3 contains low-resolution XP spectra of over 220 million stars, giving a unique opportunity to measure 								dust extinction and its vatiation in 3D.
-							<br>
-							We build a forward model that maps (Teff, [Fe/H], logg) to Gaia XP, and ultilize this model to determine the 								<a href="https://zenodo.org/records/7692681" style="color: red;"> stellar types, extinction and distances for 								all 220 million Gaia XP stars</a>.
-							<br>
-							For more details, please take a look at <a href="https://ui.adsabs.harvard.edu/abs/2023MNRAS.524.1855Z/abstract" style="color: red;">
-							our paper</a>.
-
-							<br>
-							<br>
-							<b>Variation of dust extinction in the milky way</b>
-							<br>
-							<span class="major">
-								<img src="images/Bird_eye_with_O_stars_slides_version.png" style="width:570px;height:291px;object-fit: cover;"/>
-							</span>
-
-
-							The variation of dust extinction is modelled by the parmeter R(V) (≡ A(V)/E(B-V) ), which is determined by the 								size distribution and chemical composition of the interstellar dust. Dust Rv is an also important tracer of local 								physical and chemical environment, such as SNe, star formation and molecular clouds.
-							<br>
-							Ultilizing Gaia XP spectra, we determine Rv for ~ 130 million high-extinction stars in the Milky Way, LMC and SMC, which is the largest Rv catalog <a href="https://doi.org/10.5281/zenodo.11394477" style="color: red;"> (zenodo)</a> up to 2024. 
-							<br>This paper is selected as the Cover article of   <a href="https://www.science.org/doi/10.1126/science.ado9787" style="color: red;"> Science</a>.
-							<br>
-						
-							<p>
-
-							<b> Physical explanation of R(V): Is it driven by Polycyclic Aromatic Hydrocarbons (PAHs)? </b><br>
-							<span class="major">
-								<img src="images/Rv_sky_LMC.png" style="width:570px;height:291px;object-fit: cover;"/>
-							</span>
-
-							We find evidence of PAH-driven 𝑅(𝑉) variation observationally and theoretically. The 𝑅(𝑉) value in translucent gas has an anticorrelation with the PAH abundance, as the picture shown above. Growth of PAH strengthens the 2175 Å feature, of which the red wing contributes to B band extinction but is almost negligible to V band, which leads to decrease of 𝑅(𝑉).
-<br>
-If proven, this leads to a revolutionary change on the picture of 𝑅(𝑉) as well as all fields of astronomy that utilize correction of extinction. Notably, Type Ia supernovae are observed to have anomalously low R(V), which could be connected to potential PAH growth in supernova shocks. Our findings also underscore the importance of PAH growth in the ISM, a possibility hinted at by recent PAH emission trends with metallicity. 
-<br>
-This paper is published in <a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...979L..17Z/abstract" style="color:red;">  ApJL </a>.
-							</p>
-						</article>
-
-						<!-- Here is the "Presentation" card. -->
-						<article id="pre">
-							<h2 class="major">Talks</h2>
-							<span class="image main">
-								<img src="images/head_long.jpg" style="width:360px;display: block; margin: auto;"/>
-							</span>
-							<p>
-								
-								(Title, Type, Time, Link & Place)
-								<br>
-								1.  Variation of extrinction curces from PS1, 2MASS, WISE \& Gaia | Interstellar 									Institute, July 2022 @ Institut Pascal , Saclay
-								<br><br>
-								2. Stellar parameters of 220 million stars from Gaia XP spectra | MPIA Science day, 									December 2022 @ MPIA, Heidelberg
-								<br><br>
-								3.  Stellar parameters from Gaia XP spectra using a forward model | Gaia 									XPloration, May 2023 @ IoA, Cambridge
-								<br><br>
-								4.  A 3D Rv map based on Gaia XP spectra | August 2023 @ DoA, Tsinghua University, 									Beijing
-								<br><br>
-								5. Inferred stellar parameters from 220 million XP spectra using an empirical 									forward model  | <a href="http://www.nao.cas.cn/news/xs/202307/t20230731_6848316.html" 
-								style="color: red;">NAOC Seminar, August 2023</a>
-								@ NAOC, Beijing
-								<br><br>
-								6. Inferred stellar parameters from 220 million XP spectra using an empirical forward model  | 									<a href="https://kiaa.pku.edu.cn/info/1025/9020.htm" 
-								style="color: red;">KIAA Seminar, August 2023</a> @ KIAA, PKU, Beijing
-
-							</p>
-						</article>
-
-						<!-- Here is a the "Contact" card. -->
-						<article id="contact">
-							<h2 class="major">Contact</h2>
-							<p> 
-								<b>Email:</b> xzhang@mpia.de
-							</p>
-							
-							<p> 
-								<b>Address:</b> Königstuhl 17, 69117 Heidelberg
-							</p>
-
-							<!-- 	Here are the fancy icons that link to your social media.
-								These icons are rendered using Font Awesome fonts, and you can find more icons
-								here: https://fontawesome.com/icons
-							-->
-							<ul class="icons">
-								<!-- The GitHub icon -->
-								<li>
-									<a href="https://github.com/Astrozxy" class="icon fa-github">
-										<span class="label">GitHub</span>
-									</a>
-								</li>
-								<!-- 	We can add a new icon by searching on the Font Awesome website
-									for the correct class name and inserting it as a new list item.
-
-									We found "envelope" here: https://fontawesome.com/icons/envelope
-								-->
-								<!-- <li>
-									<a href="#" class="icon fa-envelope">
-										<span class="label">Email</span>
-									</a>
-								</li> -->
-							</ul>
-						</article>
+	<main id="main">
+		<!-- ============ HERO ============ -->
+		<section class="hero" id="top">
+			<div class="hero__bg" aria-hidden="true"></div>
+			<div class="hero__content">
+				<div class="hero__visual hero-visual">
+					<div class="hero-visual__orbit hero-visual__orbit--outer" aria-hidden="true">
+						<span></span>
 					</div>
+					<div class="hero-visual__orbit hero-visual__orbit--inner" aria-hidden="true">
+						<span></span>
+					</div>
+					<figure class="hero-visual__frame">
+						<img src="images/head.jpg" alt="Portrait of Xiangyu Zhang" width="413" height="531" />
+					</figure>
+				</div>
 
-					<!-- This is the footer that appears at the bottom of the page -->
-					<footer id="footer">
-						<!-- 	You can change "Untitled" to your name to show everyone that
-							this is your work.
-						-->
-						<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-					</footer>
+				<p class="hero__eyebrow reveal">Astrophysics · Stanford, California</p>
+				<h1 class="hero__name reveal">Xiangyu Zhang <span lang="zh-CN">张翔宇</span></h1>
+				<p class="hero__role reveal">KIPAC Postdoctoral Fellow at Stanford University</p>
+				<p class="hero__lead reveal">
+					Studying the interstellar medium, measuring 3D dust extinction with machine
+					learning, and exploring how polycyclic aromatic hydrocarbons shape the
+					extinction curve across the Milky Way and its neighbours.
+				</p>
 
+				<ul class="tag-row reveal" aria-label="Surveys and instruments used in my research">
+					<li>Gaia</li>
+					<li>JWST</li>
+					<li>SPHEREx</li>
+					<li>DESI</li>
+					<li>Rubin / LSST</li>
+				</ul>
+
+				<div class="hero__actions reveal">
+					<a class="btn btn--primary" href="#research">Explore my work</a>
+					<a class="btn btn--ghost" href="CV/CV_zxy_2026.pdf" target="_blank" rel="noopener">CV &amp; publications</a>
+					<a class="btn btn--ghost" href="https://ui.adsabs.harvard.edu/search/p_=0&q=orcid%3A0000-0003-3112-3305" target="_blank" rel="noopener">ADS library</a>
+				</div>
 			</div>
 
-			<!--	This is the background image of the site.
-				All configuration of the background is done with CSS.
-				Look in the file assets/css/main.css and search for "#bg" to
-				see how this element is styled. Look for comments pointing 
-				to where you can set a new background image.
-			-->
-			<div id="bg"></div>
+			<a class="hero__scroll" href="#about" aria-label="Scroll to About section">
+				<span>Scroll</span>
+				<i aria-hidden="true"></i>
+			</a>
+		</section>
 
-			<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
-			<script>
+		<!-- ============ ABOUT ============ -->
+		<section class="section" id="about">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">01</p>
+					<h2 class="section__title">About me</h2>
+					<p class="section__intro">A physics background, a passion for interstellar dust, and a toolbox full of machine-learning models.</p>
+				</header>
 
-			let likeCount = 0;  
-			const likeButton = document.getElementById('likeCount');  
-			const likeCountElement = document.getElementById('likeCount');  
-			function likePost() {  
-			  likeCount++; 
-			  likeCountElement.textContent = 'Thanks for your ' + likeCount + ' like(s)!';   
-			}
+				<div class="about-grid">
+					<div class="about-bio reveal">
+						<p>
+							I am a <strong>KIPAC Postdoctoral Fellow</strong> at
+							<strong>Stanford University</strong>. Before joining Stanford, I completed
+							my PhD at the Max Planck Institute for Astronomy (MPIA) and Heidelberg
+							University in July 2025, then stayed at MPIA as a postdoctoral researcher.
+						</p>
+						<p>
+							Most of my work lives at the boundary between large stellar surveys and
+							interstellar dust physics: I build data-driven models of Gaia XP spectra,
+							then use them to measure stellar parameters, extinction, and the shape of
+							the extinction curve — in 3D and for tens to hundreds of millions of stars
+							at a time.
+						</p>
+						<p>
+							Beyond astronomy, I come from Baotou, “the city of deer”. I enjoy spending
+							entire days in history museums learning random historical facts — for
+							instance, how astronomers in the 16th century measured stellar coordinates.
+						</p>
 
-			</script>
+						<figure class="about-figure reveal">
+							<div class="about-figure__media">
+								<img src="images/hunyi.jpg" alt="Hun yi (armillary sphere) at the Ancient Observatory in Beijing" width="4032" height="3024" loading="lazy" />
+							</div>
+							<figcaption>
+								This is how astronomers in the 16th century measured stellar coordinates.
+								Shot by me at the Ancient Observatory, Beijing, 2018.
+							</figcaption>
+						</figure>
 
-	</body>
+						<div class="like-box reveal">
+							<button class="btn btn--ghost like-btn" id="likeBtn" type="button">
+								<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 21s-7.5-4.7-10-9.3C.3 8.6 2.6 4.5 6.5 4.5c2.2 0 3.8 1.1 5.5 3.4 1.7-2.3 3.3-3.4 5.5-3.4 3.9 0 6.2 4.1 4.5 7.2C19.5 16.3 12 21 12 21z"/></svg>
+								<span>Like this page</span>
+							</button>
+							<p class="like-note" id="likeNote">Thanks for visiting!</p>
+						</div>
+					</div>
+
+					<aside class="about-aside">
+						<div class="panel reveal">
+							<h3 class="panel__title">Positions &amp; education</h3>
+							<ol class="timeline-mini">
+								<li>
+									<span class="timeline-mini__period">2026 — present</span>
+									<span class="timeline-mini__label">KIPAC Postdoctoral Fellow, Kavli Institute for Particle Astrophysics and Cosmology, Stanford University</span>
+								</li>
+								<li>
+									<span class="timeline-mini__period">2025 — 2026</span>
+									<span class="timeline-mini__label">Postdoctoral Researcher @ Max Planck Institute for Astronomy</span>
+								</li>
+								<li>
+									<span class="timeline-mini__period">2021 — 2025</span>
+									<span class="timeline-mini__label">Graduate student @ MPIA / Heidelberg University · thesis defended July 2025</span>
+								</li>
+								<li>
+									<span class="timeline-mini__period">2017 — 2021</span>
+									<span class="timeline-mini__label">B.Sc. in Natural Science, Department of Physics, Tsinghua University</span>
+								</li>
+							</ol>
+						</div>
+
+						<div class="panel reveal">
+							<h3 class="panel__title">Research interests</h3>
+							<p class="panel__lead">Topics</p>
+							<ul class="tag-list">
+								<li>Chemical evolution of the ISM</li>
+								<li>3D dust maps of the Milky Way</li>
+								<li>PAHs &amp; the extinction curve</li>
+							</ul>
+							<p class="panel__lead">Methods</p>
+							<ul class="tag-list">
+								<li>Machine learning</li>
+								<li>Large spectroscopic &amp; photometric surveys</li>
+							</ul>
+						</div>
+
+						<div class="panel panel--link reveal">
+							<p class="panel__title">Publications</p>
+							<p>
+								The full, up-to-date list of my papers is maintained in my
+								<a href="https://ui.adsabs.harvard.edu/search/p_=0&q=orcid%3A0000-0003-3112-3305" target="_blank" rel="noopener">ADS library</a>.
+							</p>
+						</div>
+					</aside>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ RESEARCH ============ -->
+		<section class="section" id="research">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">02</p>
+					<h2 class="section__title">Research</h2>
+					<p class="section__intro">Featured projects — from spectra of 220 million stars to the physical origin of R(V).</p>
+				</header>
+
+				<div class="projects">
+					<article class="project reveal">
+						<figure class="project__media">
+							<img src="images/dustmap_1.png" alt="3D dust map visualisation of the Milky Way" width="1307" height="668" loading="lazy" />
+						</figure>
+						<div class="project__body">
+							<p class="project__meta">2023 · MNRAS 524, 1855</p>
+							<h3 class="project__title">Parameters of 220 million stars from Gaia BP/RP spectra</h3>
+							<p class="project__summary">
+								Gaia DR3 provides low-resolution XP spectra for more than 220 million
+								stars — a unique opportunity to measure dust extinction and its
+								variation in 3D. We built a forward model that maps
+								(T<sub>eff</sub>, [Fe/H], log&nbsp;g) to Gaia XP, and used it to determine
+								stellar types, extinction and distances for the full sample of
+								220&nbsp;million Gaia XP stars.
+							</p>
+							<ul class="project__tags" aria-label="Highlights">
+								<li>Gaia XP spectra</li>
+								<li>Forward modelling</li>
+								<li>220M stars</li>
+							</ul>
+							<div class="project__links">
+								<a class="btn btn--small btn--primary" href="https://ui.adsabs.harvard.edu/abs/2023MNRAS.524.1855Z/abstract" target="_blank" rel="noopener">Paper</a>
+								<a class="btn btn--small btn--ghost" href="https://zenodo.org/records/7692681" target="_blank" rel="noopener">Catalogue</a>
+							</div>
+						</div>
+					</article>
+
+					<article class="project project--reverse reveal">
+						<figure class="project__media">
+							<img src="images/Bird_eye_with_O_stars_slides_version.png" alt="Bird’s-eye view of the Milky Way dust extinction map with O stars" width="2400" height="1350" loading="lazy" />
+						</figure>
+						<div class="project__body">
+							<p class="project__meta">2025 · Science 387, 1209 <span class="badge badge--cover">Cover article</span></p>
+							<h3 class="project__title">Three-dimensional maps of the interstellar dust extinction curve</h3>
+							<p class="project__summary">
+								The shape of the extinction curve is set by the size distribution and
+								chemical composition of interstellar dust, so R(V)
+								(&equiv; A(V)/E(B−V)) traces the local physical and chemical
+								environment — supernovae, star formation and molecular clouds. Using
+								Gaia XP spectra, we determined R(V) for roughly 130 million
+								high-extinction stars in the Milky Way, LMC and SMC: the largest R(V)
+								catalogue of its kind up to 2024.
+							</p>
+							<ul class="project__tags" aria-label="Highlights">
+								<li>130M stars</li>
+								<li>3D R(V) maps</li>
+								<li>Milky Way · LMC · SMC</li>
+							</ul>
+							<div class="project__links">
+								<a class="btn btn--small btn--primary" href="https://www.science.org/doi/10.1126/science.ado9787" target="_blank" rel="noopener">Science article</a>
+								<a class="btn btn--small btn--ghost" href="https://doi.org/10.5281/zenodo.11394477" target="_blank" rel="noopener">R(V) catalogue</a>
+							</div>
+						</div>
+					</article>
+
+					<article class="project reveal">
+						<figure class="project__media">
+							<img src="images/Rv_sky_LMC.png" alt="Map of R(V) towards the Large Magellanic Cloud" width="2105" height="1095" loading="lazy" />
+						</figure>
+						<div class="project__body">
+							<p class="project__meta">2025 · ApJL 979, L17</p>
+							<h3 class="project__title">R(V) variation is driven by polycyclic aromatic hydrocarbon growth</h3>
+							<p class="project__summary">
+								We find observational and theoretical evidence that PAH-driven growth
+								shapes R(V) in the translucent interstellar medium, where R(V)
+								anti-correlates with PAH abundance. Growing PAHs strengthen the 2175&nbsp;Å
+								feature; its red wing raises B-band extinction while barely affecting the
+								V band — pulling R(V) down. If confirmed, this picture has implications
+								well beyond extinction corrections, including the anomalously low R(V)
+								values seen toward Type&nbsp;Ia supernovae.
+							</p>
+							<ul class="project__tags" aria-label="Highlights">
+								<li>PAH growth</li>
+								<li>2175 Å bump</li>
+								<li>Translucent ISM</li>
+							</ul>
+							<div class="project__links">
+								<a class="btn btn--small btn--primary" href="https://ui.adsabs.harvard.edu/abs/2025ApJ...979L..17Z/abstract" target="_blank" rel="noopener">ApJL article</a>
+							</div>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ PUBLICATIONS ============ -->
+		<section class="section" id="publications">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">03</p>
+					<h2 class="section__title">Selected publications</h2>
+					<p class="section__intro">First-author work featured on this page. Everything else lives in my ADS library.</p>
+				</header>
+
+				<ol class="pubs">
+					<li class="pub reveal">
+						<span class="pub__year" aria-hidden="true">2025</span>
+						<div class="pub__body">
+							<h3 class="pub__title">Three-dimensional maps of the interstellar dust extinction curve within the Milky Way galaxy</h3>
+							<p class="pub__venue">Science <span class="pub__detail">387, 1209</span> · Cover article</p>
+							<p class="pub__links">
+								<a href="https://www.science.org/doi/10.1126/science.ado9787" target="_blank" rel="noopener">Science article ↗</a>
+								<a href="https://doi.org/10.5281/zenodo.11394477" target="_blank" rel="noopener">Catalogue ↗</a>
+							</p>
+						</div>
+					</li>
+					<li class="pub reveal">
+						<span class="pub__year" aria-hidden="true">2025</span>
+						<div class="pub__body">
+							<h3 class="pub__title">Dust-extinction-curve variation in the translucent interstellar medium is driven by polycyclic aromatic hydrocarbon growth</h3>
+							<p class="pub__venue">The Astrophysical Journal Letters <span class="pub__detail">979, L17</span></p>
+							<p class="pub__links">
+								<a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...979L..17Z/abstract" target="_blank" rel="noopener">ADS record ↗</a>
+							</p>
+						</div>
+					</li>
+					<li class="pub reveal">
+						<span class="pub__year" aria-hidden="true">2025</span>
+						<div class="pub__body">
+							<h3 class="pub__title">The dust extinction curve: beyond R(V)</h3>
+							<p class="pub__venue">The Astrophysical Journal <span class="pub__detail">988, 5</span> · Green, Zhang &amp; Zhang</p>
+							<p class="pub__links">
+								<a href="https://ui.adsabs.harvard.edu/abs/2025ApJ...988....5G/abstract" target="_blank" rel="noopener">ADS record ↗</a>
+								<a href="https://arxiv.org/abs/2410.22537" target="_blank" rel="noopener">arXiv ↗</a>
+							</p>
+						</div>
+					</li>
+					<li class="pub reveal">
+						<span class="pub__year" aria-hidden="true">2023</span>
+						<div class="pub__body">
+							<h3 class="pub__title">Parameters of 220 million stars from Gaia BP/RP spectra</h3>
+							<p class="pub__venue">Monthly Notices of the Royal Astronomical Society <span class="pub__detail">524, 1855</span></p>
+							<p class="pub__links">
+								<a href="https://ui.adsabs.harvard.edu/abs/2023MNRAS.524.1855Z/abstract" target="_blank" rel="noopener">ADS record ↗</a>
+								<a href="https://zenodo.org/records/7692681" target="_blank" rel="noopener">Catalogue ↗</a>
+							</p>
+						</div>
+					</li>
+				</ol>
+
+				<div class="section__cta reveal">
+					<a class="btn btn--primary" href="https://ui.adsabs.harvard.edu/search/p_=0&q=orcid%3A0000-0003-3112-3305" target="_blank" rel="noopener">Full publication list on ADS</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ TALKS ============ -->
+		<section class="section" id="talks">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">04</p>
+					<h2 class="section__title">Talks</h2>
+					<p class="section__intro">A few seminars, conferences and institute science days from the last few years.</p>
+				</header>
+
+				<ol class="talks">
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Mapping dust extinction beyond stellar color</h3>
+							<p class="talk__meta">Harvard–Smithsonian Center for Astrophysics (CfA) · October 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Searching for interstellar organics in translucent dust clouds</h3>
+							<p class="talk__meta">MIT Department of Chemistry · October 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">3D dust mapping and interstellar organics</h3>
+							<p class="talk__meta">DESI lunch talk · LBNL / UC Berkeley · October 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">An all-sky 3D dust R(V) map of the Milky Way: insights into interstellar organics</h3>
+							<p class="talk__meta">KIPAC Tea talk · Stanford University · September 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">3D dust mapping and its implications for interstellar organics</h3>
+							<p class="talk__meta">Interstellar Institute · Université Paris-Saclay · July 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2025</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Mapping R(V) in 3D in the Milky Way, LMC and SMC</h3>
+							<p class="talk__meta">NAOC invited talk · National Astronomical Observatories, CAS · March 2025</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2024</span>
+						<div class="talk__body">
+							<h3 class="talk__title">R(V) variation in 3D and its implications for dust evolution</h3>
+							<p class="talk__meta">Caltech · June 2024</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2023</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Inferred stellar parameters from 220 million XP spectra using an empirical forward model</h3>
+							<p class="talk__meta">KIAA Seminar · August 2023 · Peking University, Beijing</p>
+							<a class="talk__link" href="https://kiaa.pku.edu.cn/info/1025/9020.htm" target="_blank" rel="noopener">Seminar announcement ↗</a>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2023</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Inferred stellar parameters from 220 million XP spectra using an empirical forward model</h3>
+							<p class="talk__meta">NAOC Seminar · August 2023 · National Astronomical Observatories, Beijing</p>
+							<a class="talk__link" href="http://www.nao.cas.cn/news/xs/202307/t20230731_6848316.html" target="_blank" rel="noopener">Seminar announcement ↗</a>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2023</span>
+						<div class="talk__body">
+							<h3 class="talk__title">A 3D R(V) map based on Gaia XP spectra</h3>
+							<p class="talk__meta">Invited talk · August 2023 · Department of Astronomy, Tsinghua University, Beijing</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2023</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Stellar parameters from Gaia XP spectra using a forward model</h3>
+							<p class="talk__meta">Gaia XPloration · May 2023 · Institute of Astronomy, Cambridge</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2022</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Stellar parameters of 220 million stars from Gaia XP spectra</h3>
+							<p class="talk__meta">MPIA Science Day · December 2022 · MPIA, Heidelberg</p>
+						</div>
+					</li>
+					<li class="talk reveal">
+						<span class="talk__year">2022</span>
+						<div class="talk__body">
+							<h3 class="talk__title">Variation of extinction curves from PS1, 2MASS, WISE &amp; Gaia</h3>
+							<p class="talk__meta">Interstellar Institute · July 2022 · Institut Pascal, Saclay</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<!-- ============ OBSERVATIONS ============ -->
+		<section class="section" id="observations">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">05</p>
+					<h2 class="section__title">Observations</h2>
+					<p class="section__intro">Approved proposals where I am principal investigator.</p>
+				</header>
+
+				<div class="obs-grid">
+					<article class="obs-card reveal">
+						<div class="obs-card__top">
+							<span class="obs-card__scope">GBT · K-band · 18–26.5 GHz</span>
+							<span class="obs-card__time">30.0 h</span>
+						</div>
+						<h3 class="obs-card__title">Detecting HC3N in M31: verifying extragalactic in-situ PAH formation</h3>
+						<p class="obs-card__meta">Group A · linear ranked score 2.41 / 10</p>
+					</article>
+
+					<article class="obs-card reveal">
+						<div class="obs-card__top">
+							<span class="obs-card__scope">GBT · K-band · 18–26.5 GHz</span>
+							<span class="obs-card__time">5.0 h</span>
+						</div>
+						<h3 class="obs-card__title">Tracers of PAH formation at the edges of molecular clouds: source verification</h3>
+						<p class="obs-card__meta">Group A · linear ranked score 0.65 / 10</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- ============ CONTACT ============ -->
+		<section class="section section--contact" id="contact">
+			<div class="section__inner">
+				<header class="section__head reveal">
+					<p class="section__index">06</p>
+					<h2 class="section__title">Get in touch</h2>
+					<p class="section__intro">Questions about my work, collaborations or data products? I’d be happy to hear from you.</p>
+				</header>
+
+				<div class="contact-grid">
+					<div class="contact-card reveal">
+						<h3 class="contact-card__title">Office</h3>
+						<ul class="contact-list">
+							<li>
+								<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm8 7 8-5H4l8 5zm-8 2 5.5 3.4L4 18v-5zm8 3.4L20 13v5h-8v-2.6z"/></svg>
+								<span><a href="mailto:astrozxy@stanford.edu">astrozxy@stanford.edu</a></span>
+							</li>
+							<li>
+								<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+								<span>Kavli Institute for Particle Astrophysics and Cosmology (KIPAC), Stanford University<br />Stanford, California, USA</span>
+							</li>
+						</ul>
+					</div>
+
+					<div class="contact-card reveal">
+						<h3 class="contact-card__title">Elsewhere</h3>
+						<ul class="social-list">
+							<li>
+								<a href="https://github.com/Astrozxy" target="_blank" rel="noopener">
+									<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 .5 12a11.5 11.5 0 0 0 7.9 10.9c.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.3 4.9 18.3 5.2 18.3 5.2c.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z"/></svg>
+									<span>GitHub <small>@Astrozxy</small></span>
+								</a>
+							</li>
+							<li>
+								<a href="https://ui.adsabs.harvard.edu/search/p_=0&q=orcid%3A0000-0003-3112-3305" target="_blank" rel="noopener">
+									<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8zm1-14h-2v6l5.2 3.1 1-1.7-4.2-2.5z"/></svg>
+									<span>NASA ADS <small>ORCID 0000-0003-3112-3305</small></span>
+								</a>
+							</li>
+							<li>
+								<a href="CV/CV_zxy_2026.pdf" target="_blank" rel="noopener">
+									<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 8V3.5L18.5 10H13zm-2 9-2.5-2.5L10 15l2 2 4-4 1.5 1.5-4.5 4.5z"/></svg>
+									<span>CV &amp; publications <small>PDF · updated September 2026</small></span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<div class="site-footer__inner">
+			<p>© <span id="year">2026</span> Xiangyu Zhang <span lang="zh-CN">张翔宇</span> · Stanford, California</p>
+			<p class="site-footer__note">Data, dust &amp; the occasional history museum.</p>
+		</div>
+	</footer>
+
+	<script src="assets/js/main.js"></script>
+</body>
 </html>

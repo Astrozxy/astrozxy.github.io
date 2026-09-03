@@ -1,401 +1,236 @@
-/*
-	Dimension by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
+/* ==========================================================================
+   Xiangyu Zhang — personal academic site
+   Vanilla JS: starfield, reveal-on-scroll, scrollspy, mobile nav, like button.
+   ========================================================================== */
+(function () {
+	"use strict";
 
-(function($) {
+	var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+	var finePointer = window.matchMedia("(pointer: fine)").matches;
 
-	var	$window = $(window),
-		$body = $('body'),
-		$wrapper = $('#wrapper'),
-		$header = $('#header'),
-		$footer = $('#footer'),
-		$main = $('#main'),
-		$main_articles = $main.children('article');
-
-	// Breakpoints.
-		breakpoints({
-			xlarge:   [ '1281px',  '1680px' ],
-			large:    [ '981px',   '1280px' ],
-			medium:   [ '737px',   '980px'  ],
-			small:    [ '481px',   '736px'  ],
-			xsmall:   [ '361px',   '480px'  ],
-			xxsmall:  [ null,      '360px'  ]
+	/* ---------- Leave the preload state once the first frame is ready ---------- */
+	function enableMotion() {
+		document.body.classList.remove("is-preload");
+	}
+	if (document.readyState === "loading") {
+		window.addEventListener("DOMContentLoaded", function () {
+			requestAnimationFrame(enableMotion);
 		});
+	} else {
+		requestAnimationFrame(enableMotion);
+	}
 
-	// Play initial animations on page load.
-		$window.on('load', function() {
-			window.setTimeout(function() {
-				$body.removeClass('is-preload');
-			}, 100);
-		});
+	/* ---------- Header elevation on scroll ---------- */
+	var header = document.getElementById("siteHeader");
+	var headerTicking = false;
 
-	// Fix: Flexbox min-height bug on IE.
-		if (browser.name == 'ie') {
+	function updateHeader() {
+		header.classList.toggle("is-scrolled", window.scrollY > 10);
+		headerTicking = false;
+	}
 
-			var flexboxFixTimeoutId;
-
-			$window.on('resize.flexbox-fix', function() {
-
-				clearTimeout(flexboxFixTimeoutId);
-
-				flexboxFixTimeoutId = setTimeout(function() {
-
-					if ($wrapper.prop('scrollHeight') > $window.height())
-						$wrapper.css('height', 'auto');
-					else
-						$wrapper.css('height', '100vh');
-
-				}, 250);
-
-			}).triggerHandler('resize.flexbox-fix');
-
+	window.addEventListener("scroll", function () {
+		if (!headerTicking) {
+			headerTicking = true;
+			requestAnimationFrame(updateHeader);
 		}
-
-	// Nav.
-		var $nav = $header.children('nav'),
-			$nav_li = $nav.find('li');
-
-		// Add "middle" alignment classes if we're dealing with an even number of items.
-			if ($nav_li.length % 2 == 0) {
-
-				$nav.addClass('use-middle');
-				$nav_li.eq( ($nav_li.length / 2) ).addClass('is-middle');
-
-			}
-
-	// Main.
-		var	delay = 325,
-			locked = false;
-
-		// Methods.
-			$main._show = function(id, initial) {
-
-				var $article = $main_articles.filter('#' + id);
-
-				// No such article? Bail.
-					if ($article.length == 0)
-						return;
-
-				// Handle lock.
-
-					// Already locked? Speed through "show" steps w/o delays.
-						if (locked || (typeof initial != 'undefined' && initial === true)) {
-
-							// Mark as switching.
-								$body.addClass('is-switching');
-
-							// Mark as visible.
-								$body.addClass('is-article-visible');
-
-							// Deactivate all articles (just in case one's already active).
-								$main_articles.removeClass('active');
-
-							// Hide header, footer.
-								$header.hide();
-								$footer.hide();
-
-							// Show main, article.
-								$main.show();
-								$article.show();
-
-							// Activate article.
-								$article.addClass('active');
-
-							// Unlock.
-								locked = false;
-
-							// Unmark as switching.
-								setTimeout(function() {
-									$body.removeClass('is-switching');
-								}, (initial ? 1000 : 0));
-
-							return;
-
-						}
-
-					// Lock.
-						locked = true;
-
-				// Article already visible? Just swap articles.
-					if ($body.hasClass('is-article-visible')) {
-
-						// Deactivate current article.
-							var $currentArticle = $main_articles.filter('.active');
-
-							$currentArticle.removeClass('active');
-
-						// Show article.
-							setTimeout(function() {
-
-								// Hide current article.
-									$currentArticle.hide();
-
-								// Show article.
-									$article.show();
-
-								// Activate article.
-									setTimeout(function() {
-
-										$article.addClass('active');
-
-										// Window stuff.
-											$window
-												.scrollTop(0)
-												.triggerHandler('resize.flexbox-fix');
-
-										// Unlock.
-											setTimeout(function() {
-												locked = false;
-											}, delay);
-
-									}, 25);
-
-							}, delay);
-
-					}
-
-				// Otherwise, handle as normal.
-					else {
-
-						// Mark as visible.
-							$body
-								.addClass('is-article-visible');
-
-						// Show article.
-							setTimeout(function() {
-
-								// Hide header, footer.
-									$header.hide();
-									$footer.hide();
-
-								// Show main, article.
-									$main.show();
-									$article.show();
-
-								// Activate article.
-									setTimeout(function() {
-
-										$article.addClass('active');
-
-										// Window stuff.
-											$window
-												.scrollTop(0)
-												.triggerHandler('resize.flexbox-fix');
-
-										// Unlock.
-											setTimeout(function() {
-												locked = false;
-											}, delay);
-
-									}, 25);
-
-							}, delay);
-
-					}
-
-			};
-
-			$main._hide = function(addState) {
-
-				var $article = $main_articles.filter('.active');
-
-				// Article not visible? Bail.
-					if (!$body.hasClass('is-article-visible'))
-						return;
-
-				// Add state?
-					if (typeof addState != 'undefined'
-					&&	addState === true)
-						history.pushState(null, null, '#');
-
-				// Handle lock.
-
-					// Already locked? Speed through "hide" steps w/o delays.
-						if (locked) {
-
-							// Mark as switching.
-								$body.addClass('is-switching');
-
-							// Deactivate article.
-								$article.removeClass('active');
-
-							// Hide article, main.
-								$article.hide();
-								$main.hide();
-
-							// Show footer, header.
-								$footer.show();
-								$header.show();
-
-							// Unmark as visible.
-								$body.removeClass('is-article-visible');
-
-							// Unlock.
-								locked = false;
-
-							// Unmark as switching.
-								$body.removeClass('is-switching');
-
-							// Window stuff.
-								$window
-									.scrollTop(0)
-									.triggerHandler('resize.flexbox-fix');
-
-							return;
-
-						}
-
-					// Lock.
-						locked = true;
-
-				// Deactivate article.
-					$article.removeClass('active');
-
-				// Hide article.
-					setTimeout(function() {
-
-						// Hide article, main.
-							$article.hide();
-							$main.hide();
-
-						// Show footer, header.
-							$footer.show();
-							$header.show();
-
-						// Unmark as visible.
-							setTimeout(function() {
-
-								$body.removeClass('is-article-visible');
-
-								// Window stuff.
-									$window
-										.scrollTop(0)
-										.triggerHandler('resize.flexbox-fix');
-
-								// Unlock.
-									setTimeout(function() {
-										locked = false;
-									}, delay);
-
-							}, 25);
-
-					}, delay);
-
-
-			};
-
-		// Articles.
-			$main_articles.each(function() {
-
-				var $this = $(this);
-
-				// Close.
-					$('<div class="close">Close</div>')
-						.appendTo($this)
-						.on('click', function() {
-							location.hash = '';
-						});
-
-				// Prevent clicks from inside article from bubbling.
-					$this.on('click', function(event) {
-						event.stopPropagation();
-					});
-
+	}, { passive: true });
+	updateHeader();
+
+	/* ---------- Mobile navigation ---------- */
+	var navToggle = document.getElementById("navToggle");
+	var siteNav = document.getElementById("siteNav");
+
+	function closeNav() {
+		siteNav.classList.remove("is-open");
+		navToggle.setAttribute("aria-expanded", "false");
+	}
+
+	navToggle.addEventListener("click", function () {
+		var open = siteNav.classList.toggle("is-open");
+		navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+	});
+
+	siteNav.addEventListener("click", function (event) {
+		if (event.target.closest("a")) closeNav();
+	});
+
+	window.addEventListener("keydown", function (event) {
+		if (event.key === "Escape") closeNav();
+	});
+
+	/* ---------- Scrollspy: highlight the section currently in view ---------- */
+	var navLinks = Array.prototype.slice.call(siteNav.querySelectorAll("a"));
+	var spySections = navLinks
+		.map(function (link) {
+			var id = link.getAttribute("href");
+			return id && id.charAt(0) === "#" ? document.querySelector(id) : null;
+		})
+		.filter(Boolean);
+
+	if ("IntersectionObserver" in window && spySections.length) {
+		var spy = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (!entry.isIntersecting) return;
+				var id = "#" + entry.target.id;
+				navLinks.forEach(function (link) {
+					link.classList.toggle("is-active", link.getAttribute("href") === id);
+				});
 			});
+		}, {
+			rootMargin: "-35% 0px -58% 0px"
+		});
 
-		// Events.
-			$body.on('click', function(event) {
+		spySections.forEach(function (section) {
+			spy.observe(section);
+		});
+	}
 
-				// Article visible? Hide.
-					if ($body.hasClass('is-article-visible'))
-						$main._hide(true);
+	/* ---------- Reveal-on-scroll ---------- */
+	var revealEls = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
 
-			});
-
-			$window.on('keyup', function(event) {
-
-				switch (event.keyCode) {
-
-					case 27:
-
-						// Article visible? Hide.
-							if ($body.hasClass('is-article-visible'))
-								$main._hide(true);
-
-						break;
-
-					default:
-						break;
-
+	if ("IntersectionObserver" in window && !reduceMotion) {
+		var revealObserver = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					entry.target.classList.add("in");
+					revealObserver.unobserve(entry.target);
 				}
-
 			});
+		}, {
+			threshold: 0.12,
+			rootMargin: "0px 0px -7% 0px"
+		});
+		revealEls.forEach(function (el) {
+			revealObserver.observe(el);
+		});
+	} else {
+		revealEls.forEach(function (el) {
+			el.classList.add("in");
+		});
+	}
 
-			$window.on('hashchange', function(event) {
+	/* ---------- Starfield ---------- */
+	var canvas = document.getElementById("stardust");
+	var ctx = canvas.getContext("2d");
+	var stars = [];
+	var starColors = ["255,255,255", "182,214,255", "214,199,255", "255,224,173"];
+	var dpr = Math.min(window.devicePixelRatio || 1, 2);
+	var W = 0;
+	var H = 0;
 
-				// Empty hash?
-					if (location.hash == ''
-					||	location.hash == '#') {
-
-						// Prevent default.
-							event.preventDefault();
-							event.stopPropagation();
-
-						// Hide.
-							$main._hide();
-
-					}
-
-				// Otherwise, check for a matching article.
-					else if ($main_articles.filter(location.hash).length > 0) {
-
-						// Prevent default.
-							event.preventDefault();
-							event.stopPropagation();
-
-						// Show article.
-							$main._show(location.hash.substr(1));
-
-					}
-
+	function buildStars() {
+		var count = Math.max(70, Math.min(240, Math.round((W * H) / 11000)));
+		stars = [];
+		for (var i = 0; i < count; i += 1) {
+			stars.push({
+				x: Math.random() * W,
+				y: Math.random() * H,
+				radius: Math.random() * 1.05 + 0.35,
+				alpha: Math.random() * 0.55 + 0.2,
+				speed: Math.random() * 0.9 + 0.25,
+				phase: Math.random() * Math.PI * 2,
+				color: starColors[i % starColors.length]
 			});
+		}
+	}
 
-		// Scroll restoration.
-		// This prevents the page from scrolling back to the top on a hashchange.
-			if ('scrollRestoration' in history)
-				history.scrollRestoration = 'manual';
-			else {
+	function resizeCanvas() {
+		W = window.innerWidth;
+		H = window.innerHeight;
+		canvas.width = Math.round(W * dpr);
+		canvas.height = Math.round(H * dpr);
+		canvas.style.width = W + "px";
+		canvas.style.height = H + "px";
+		ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+		buildStars();
+		if (reduceMotion) drawStars(1);
+	}
 
-				var	oldScrollPos = 0,
-					scrollPos = 0,
-					$htmlbody = $('html,body');
+	function drawStars(time) {
+		ctx.clearRect(0, 0, W, H);
+		for (var i = 0; i < stars.length; i += 1) {
+			var s = stars[i];
+			var twinkle = reduceMotion
+				? 1
+				: (Math.sin(time * 0.001 * s.speed + s.phase) + 1) / 2;
+			var a = s.alpha * (0.55 + 0.45 * twinkle);
+			ctx.beginPath();
+			ctx.arc(s.x, s.y, s.radius, 0, Math.PI * 2);
+			ctx.fillStyle = "rgba(" + s.color + "," + a.toFixed(3) + ")";
+			ctx.fill();
+		}
+	}
 
-				$window
-					.on('scroll', function() {
+	function animateStars(time) {
+		drawStars(time);
+		requestAnimationFrame(animateStars);
+	}
 
-						oldScrollPos = scrollPos;
-						scrollPos = $htmlbody.scrollTop();
+	resizeCanvas();
+	window.addEventListener("resize", resizeCanvas, { passive: true });
+	if (!reduceMotion) requestAnimationFrame(animateStars);
 
-					})
-					.on('hashchange', function() {
-						$window.scrollTop(oldScrollPos);
-					});
+	/* ---------- Subtle mouse parallax on the hero portrait ---------- */
+	var heroVisual = document.querySelector(".hero-visual");
 
-			}
+	if (heroVisual && finePointer && !reduceMotion) {
+		var hero = document.getElementById("top");
+		var parTicking = false;
+		var parX = 0;
+		var parY = 0;
 
-		// Initialize.
+		hero.addEventListener("pointermove", function (event) {
+			if (parTicking) return;
+			parTicking = true;
+			requestAnimationFrame(function () {
+				var rect = hero.getBoundingClientRect();
+				parX = ((event.clientX - rect.left) / rect.width - 0.5) * 14;
+				parY = ((event.clientY - rect.top) / rect.height - 0.5) * 14;
+				heroVisual.style.transform = "translate(" + parX.toFixed(2) + "px," + parY.toFixed(2) + "px)";
+				parTicking = false;
+			});
+		}, { passive: true });
 
-			// Hide main, articles.
-				$main.hide();
-				$main_articles.hide();
+		hero.addEventListener("pointerleave", function () {
+			heroVisual.style.transform = "translate(0,0)";
+		}, { passive: true });
+	}
 
-			// Initial article.
-				if (location.hash != ''
-				&&	location.hash != '#')
-					$window.on('load', function() {
-						$main._show(location.hash.substr(1), true);
-					});
+	/* ---------- Like counter (persisted in this browser) ---------- */
+	var likeKey = "xyzhang_site_likes";
+	var likeCount = 0;
+	try {
+		likeCount = parseInt(window.localStorage.getItem(likeKey), 10) || 0;
+	} catch (error) {
+		likeCount = 0;
+	}
 
-})(jQuery);
+	var likeBtn = document.getElementById("likeBtn");
+	var likeNote = document.getElementById("likeNote");
+
+	function renderLikes() {
+		if (likeCount === 0) {
+			likeNote.textContent = "Thanks for visiting — tap the heart if this page helped you find something!";
+			likeBtn.classList.remove("is-liked");
+		} else {
+			likeNote.textContent = "You’ve liked this page " + likeCount + (likeCount === 1 ? " time" : " times") + " (saved in your browser).";
+			likeBtn.classList.add("is-liked");
+		}
+	}
+
+	likeBtn.addEventListener("click", function () {
+		likeCount += 1;
+		try {
+			window.localStorage.setItem(likeKey, String(likeCount));
+		} catch (error) {
+			/* private mode or quota — counter still works for this visit */
+		}
+		renderLikes();
+	});
+	renderLikes();
+
+	/* ---------- Footer year ---------- */
+	var yearEl = document.getElementById("year");
+	if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+})();
